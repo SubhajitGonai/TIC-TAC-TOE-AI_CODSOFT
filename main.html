@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="design/styles.css">
+</head>
+<body>
+    <div id="container">
+        <div id="controls">
+            <button id="play-ai">Play with AI</button>
+            <button id="play-multiplayer">Play Multiplayer</button>
+        </div>
+        <div id="marker-selection">
+            <button id="select-x">Select X</button>
+            <button id="select-o">Select O</button>
+        </div>
+        <div id="marker-note">Select your marker</div>
+        <div id="game-box"></div>
+        <button id="reset-game">Reset Game</button>
+        <button id="instructions">Instructions</button>
+        <div id="instructions-popup">
+            <span id="close-instructions">X</span>
+            <p>Instructions for the game...</p>
+        </div>
+        
+        <div id="ai-results-container">
+            <table id="ai-results-table">
+                <thead>
+                    <tr>
+                        <th>Match</th>
+                        <th>Winner</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- AI match results will be appended here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="algo/script.js"></script>
+</body>
+</html>

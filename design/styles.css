@@ -1,0 +1,574 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #282828;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#container {
+    position: relative; /* To ensure pseudo-elements align with the container */
+    text-align: center;
+    background-color: #272727;
+    border-radius: 15px; /* Keep the rectangular shape */
+    border: 7px solid #282828; /* Border */
+    outline: 1px solid black;
+    box-shadow: -4px -4px 10px rgba(67,67,67,0.5),
+                inset 4px 4px 10px rgba(0,0,0,0.5),
+                inset -4px -4px 10px rgba(67,67,67,0.5),
+                4px 4px 10px rgba(0,0,0,0.3); /* Shadow */
+    padding: 20px;
+    width: 340px;
+    max-width: 100%;
+    z-index: 1;
+}
+
+
+#container::before {
+    content: '';
+    position: absolute;
+    top: 1px; /* Adjust to match the thickness of the border */
+    left: 1px; /* Adjust to match the thickness of the border */
+    right: 1px; /* Adjust to match the thickness of the border */
+    bottom: 1px; /* Adjust to match the thickness of the border */
+    border-radius: 9px; /* Same border-radius as the container */
+    border: 1px solid rgba(5, 5, 5, 0.5); /* Inner border color and thickness */
+    pointer-events: none; /* Ensure that this pseudo-element does not block interactions */
+    box-sizing: border-box; /* Include border in element's total width and height */
+}
+
+
+
+
+
+
+#controls {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center; /* Center align buttons horizontally */
+    flex-wrap: wrap; /* Allow buttons to wrap to the next line if there's not enough space */
+}
+
+#controls button{
+    padding: 10px 20px;
+    margin: 5px; /* Add margin around each button for spacing */
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid #fdfdfd; /* Ensure consistent border */
+    border-radius: 15px; /* Rounded corners */
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text color */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+}
+
+#controls button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#controls button:focus  {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.4); /* Custom focus outline */
+}
+
+
+/* General button styling */
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid #fdfdfd;
+    border-radius: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Styling for "Select X" button */
+#select-x {
+    background-color: #ff5722; /* Distinct orange color */
+    color: white;
+}
+
+#select-x:hover {
+    background-color: #e64a19; /* Darker orange on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#select-x:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.4); /* Custom focus outline with orange tint */
+}
+
+/* Styling for "Select O" button */
+#select-o {
+    background-color: #2196F3; /* Distinct blue color */
+    color: white;
+}
+
+#select-o:hover {
+    background-color: #1976D2; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#select-o:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.4); /* Custom focus outline with blue tint */
+}
+
+
+/* Styling for Marker Selection Container */
+#marker-selection {
+    margin-bottom: 20px; /* Space below the marker selection section */
+    text-align: center; /* Center the content */
+}
+
+/* Styling for Marker Selection Buttons */
+#marker-selection button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50; /* Green background for buttons */
+    color: white; /* White text color */
+    border: 2px solid #fdfdfd; /* Light border */
+    border-radius: 15px; /* Rounded corners */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+#marker-selection button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+#marker-selection button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.4); /* Custom focus outline */
+}
+
+/* Styling for Marker Note */
+#marker-note {
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-align: center; /* Center the text */
+    color: #cfcdcd; /* Dark text color for visibility */
+    opacity: 0; /* Start with hidden text */
+    animation: fadeInOut 3s ease-in-out infinite; /* Apply fade-in and fade-out animation */
+}
+
+/* Keyframes for Fade In and Fade Out Animation */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+#game-box {
+    display: grid;
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(3, 60px);
+    gap: 5px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+/* General styling for the Tic Tac Toe board */
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(3, 60px);
+    gap: 5px; /* Space between cells */
+    margin: 0 auto; /* Center the board horizontally */
+}
+
+/* Styling for each cell */
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff; /* White background for cells */
+    border: 2px solid #00f4fcec; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 2em; /* Larger font size for X and O */
+    color: #333; /* Dark text color */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    position: relative; /* Needed for absolute positioning of animation */
+    overflow: hidden; /* Hide overflow for flip effect */
+}
+
+/* Hover effect for cells */
+.cell:hover {
+    background-color: #03fa7e18; /* Slightly darker background on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+
+/* Styling for Reset Game and Instructions Buttons */
+#reset-game, #instructions {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50; /* Green background for buttons */
+    color: white; /* White text color */
+    border: 2px solid #fdfdfd; /* Adjust border width */
+    border-radius: 15px; /* Rounded corners for buttons */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+#reset-game:hover, #instructions:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+#reset-game:focus, #instructions:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.4); /* Custom focus outline */
+}
+
+/* Styling for Instructions Popup */
+#instructions-popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #4CAF50; /* Green border for a fresh look */
+    border-radius: 10px; /* Rounded corners for the popup */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Softer shadow for a modern look */
+    z-index: 1000; /* Ensure popup is above other content */
+    width: 300px; /* Fixed width for consistency */
+    max-width: 90vw; /* Responsive width */
+    box-sizing: border-box; /* Include padding in width calculation */
+    animation: slideIn 0.5s ease-out; /* Animation for popup appearance */
+}
+
+/* Keyframes for Popup Slide-In Animation */
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -60%); /* Start above */
+        opacity: 0; /* Start hidden */
+    }
+    to {
+        transform: translate(-50%, -50%); /* End at center */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+/* Styling for Close Instructions Button */
+#close-instructions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 20px; /* Slightly larger for better visibility */
+    color: #4CAF50; /* Green color for close button */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition effects */
+}
+
+/* Styling for Close Instructions Button Hover */
+#close-instructions:hover {
+    color: #f00; /* Red color on hover for better visibility */
+    transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
+/* Shadow effect when the user loses against AI */
+.ai-loss-shadow {
+    box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.7) !important; /* Red shadow for loss */
+}
+
+/* Shadow effect when the user wins against AI */
+.ai-win-shadow {
+    box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.7) !important; /* Green shadow for win */
+}
+
+/* Shadow effect when the user & Ai draw Match */
+.ai-draw-shadow {
+    box-shadow: 0 0 15px 5px rgba(12, 13, 17, 0.7) !important; /* Green shadow for win */
+    transition: background-color 0.5s ease;
+}
+
+
+#ai-results-container {
+    position: fixed;
+    top: 20px;
+    right: -220px; /* Initially hidden off-screen */
+    width: 180px;
+    padding: 15px;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+    border: 7px solid #282828; /* Border */
+    outline: 1px solid white;
+    box-shadow: -4px -4px 10px rgba(67,67,67,0.5),
+                inset 4px 4px 10px rgba(0,0,0,0.5),
+                inset -4px -4px 10px rgba(67,67,67,0.5),
+                4px 4px 10px rgba(0,0,0,0.3); /* Shadow */
+    text-align: center;
+    display: none; /* Initially hidden */
+    transition: right 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+
+/* Show the container */
+#ai-results-container.show {
+    right: 20px; /* Slide into view */
+    display: block; /* Show container with transition */
+    animation: slideInFromLeft 0.5s ease forwards; /* Slide in from the left */
+}
+
+/* Hide the container */
+#ai-results-container.hide {
+    animation: slideOutToLeft 0.5s ease forwards; /* Slide out to the left */
+}
+
+/* Hover effect for interactive feel */
+#ai-results-container:hover {
+    box-shadow: 
+        -6px -6px 12px rgba(255, 255, 255, 0.8),
+        6px 6px 20px rgba(0, 0, 0, 0.3),
+        inset 4px 4px 10px rgba(67, 67, 67, 0.3),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.7);
+}
+
+/* Keyframes for slide in from the left */
+@keyframes slideInFromLeft {
+    from {
+        right: -220px;
+        opacity: 0;
+    }
+    to {
+        right: 20px;
+        opacity: 1;
+    }
+}
+
+/* Keyframes for slide out to the left */
+@keyframes slideOutToLeft {
+    from {
+        right: 20px;
+        opacity: 1;
+    }
+    to {
+        right: -220px;
+        opacity: 0;
+    }
+}
+
+
+/* Styling for AI Results Table */
+#ai-results-table {
+    border-collapse: separate; /* Separate borders for better styling */
+    border-spacing: 0; /* Remove default spacing */
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+/* Styling for Table Headers */
+#ai-results-table th {
+    background: linear-gradient(135deg, #4CAF50, #81C784); /* Gradient background */
+    color: white;
+    border: 1px solid #388E3C; /* Darker border color */
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 8px; /* Rounded corners for headers */
+    position: relative; /* Position relative for box-shadow */
+}
+
+/* Add a bottom border to the header to create space between columns */
+#ai-results-table th:not(:last-child) {
+    border-right: 2px solid #4CAF50; /* Green border for separation */
+}
+
+/* Styling for Table Cells */
+#ai-results-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    border-radius: 6px; /* Rounded corners for cells */
+}
+
+/* Add space between cells */
+#ai-results-table td:not(:last-child) {
+    border-right: 2px solid #ddd; /* Light gray border for separation */
+}
+
+/* Hover effect for table rows */
+#ai-results-table tr:hover td {
+    background-color: #e8f5e9; /* Light green background on hover */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+}
+
+/* Zebra striping for table rows */
+#ai-results-table tr:nth-child(even) td {
+    background-color: #f1f8e9; /* Very light green background for even rows */
+}
+
+/* Enhance header row styling */
+#ai-results-table thead tr {
+    border-bottom: 2px solid #4CAF50; /* Green border below the header row */
+}
+
+/* Add spacing between rows */
+#ai-results-table tr {
+    border-bottom: 1px solid #ddd; /* Light gray border between rows */
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.5s;
+}
+
+
+/* Shrink effect for container */
+.shrink {
+    transform: scale(0.95); /* Shrink slightly */
+    transition: transform 2s ease; /* Smooth transition */
+}
+
+/* Red shadow effect */
+.red-shadow {
+    box-shadow: 0 0 15px 10px red !important; /* Override the existing shadow with a red shadow */
+    transition: box-shadow 2s ease; /* Smooth shadow transition */
+}
+
+
+
+.popup {
+    position: fixed;
+    bottom: 40px; /* Adjusted position for better visibility */
+    left: 50%;
+    transform: translateX(-50%) translateY(0); /* Center horizontally */
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    font-size: 16px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    max-width: 90%;
+    width: auto;
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.popup-show {
+    opacity: 1;
+    animation: popup-animation 0.6s ease forwards;
+}
+
+@keyframes popup-animation {
+    0% {
+        transform: translateX(-50%) translateY(30px) scale(0.7);
+        opacity: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px) scale(1.05);
+        opacity: 0.9;
+        background-color: rgba(255, 87, 34, 0.9); /* Vibrant orange */
+    }
+    100% {
+        transform: translateX(-50%) translateY(0) scale(1);
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+}
+
+@keyframes color-flash {
+    0% {
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+    50% {
+        background-color: rgba(255, 87, 34, 0.9); /* Vibrant orange */
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+}
+
+.popup.flash {
+    animation: color-flash 0.5s ease;
+}
+
+
+
+@keyframes colorChange {
+    0% { box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.959), 0 0 10px 5px rgba(0, 255, 0, 0.5), 0 0 10px 5px rgba(0, 0, 255, 0.5); }
+    50% { box-shadow: 0 0 10px 5px rgba(245, 43, 7, 0.5), 0 0 10px 5px rgba(0, 255, 255, 0.5), 0 0 10px 5px rgba(255, 0, 255, 0.5); }
+    100% { box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5), 0 0 10px 5px rgba(0, 255, 0, 0.5), 0 0 10px 5px rgba(0, 0, 255, 0.5); }
+}
+
+.color-change {
+    animation: colorChange 5s;
+}
+
+
+
+/* Prevent scrolling during transition */
+body {
+    overflow: hidden;
+}
+
+/* Smooth slide transition */
+#container {
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Slide the container out to the left */
+.slide-out {
+    transform: translateX(-100%);
+}
+
+/* Hide content after transition */
+.hidden {
+    display: none;
+}
+
+
+/* Define the animation */
+@keyframes shiftAnimation {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(10px); /* Shift right */
+    }
+    100% {
+        transform: translateX(0); /* Back to original position */
+    }
+  }
+  
+  /* Apply animation to the button */
+  #back-to-main-menu {
+    transition: transform 0.3s ease;
+  }
+  
+  /* Add class for animation */
+  .animate-shift {
+    animation: shiftAnimation 0.6s ease;
+  }
+  
